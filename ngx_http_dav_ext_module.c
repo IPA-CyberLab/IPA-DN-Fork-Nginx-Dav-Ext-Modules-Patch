@@ -862,8 +862,11 @@ ngx_http_dav_ext_propfind(ngx_http_request_t *r, ngx_uint_t props)
         name.len = ngx_de_namelen(&dir);
         name.data = ngx_de_name(&dir);
 
-        if (name.data[0] == '.') {
-            // continue;
+        if (name.data[0] == '.' && name.data[1] == '\0') {
+            continue;
+        }
+        if (name.data[0] == '.' && name.data[1] == '.' && name.data[2] == '\0') {
+            continue;
         }
 
         ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
